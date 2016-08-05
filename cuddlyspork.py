@@ -29,6 +29,6 @@ def table_to_html(file,table):
   html = filter_html(tables[table].to_html())
 
   # open a file and write the html to that file
-  table_doc = open(table + '.txt','w')
+  table_doc = open(table + '.html','w')
   table_doc.write(html)
   table_doc.close()
