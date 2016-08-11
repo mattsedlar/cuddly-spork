@@ -17,8 +17,10 @@ cuddlyspork.table_to_html(file,table,ints)
 Function parameters:
 
 **file**: *str*, the file that holds tables
+
 **table**: *str*, the table (`sheetname` argument in pandas' `read_excel` function) you wish to convert
-**ints**: *int,list*, a single integer or list of integers representing columns that read_excel converted from percentage to decimal that need to be converted back. Defaults to `None`
+
+**ints**: *int,list*, a single integer or list of integers representing columns that read_excel converted from percentages to floats that need to be converted back. Defaults to `None`
 
 Sample:
 
