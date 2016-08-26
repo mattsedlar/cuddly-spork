@@ -19,18 +19,31 @@ def filter_html(html):
 def stringify(x):
   # coerce into float if it isn't already
   x = float(x)
-  x = str(round(x * 100,2)) + "%"
+  x = str(round(x * 100,1)) + "%"
   return x
 
-def transform(df,ints):
+def roundify(x):
+  # coerce into float if it isn't already
+  x = float(x)
+  x = round(x,1)
+  return x
+
+def transform(df,ints,skip):
   if type(ints) == list:
     for int in ints:
-      df.iloc[0:,int] = df.iloc[0:,int].apply(stringify)
+      df.iloc[skip:,int] = df.iloc[skip:,int].apply(stringify)
       
   else:
-    df.iloc[0:,ints] = df.iloc[0:,ints].apply(stringify)
+    df.iloc[skip:,ints] = df.iloc[skip:,ints].apply(stringify)
+    
+def round_up(df,ints,skip):
+    if type(ints) == list:
+      for int in ints:
+        df.iloc[skip:,int] = df.iloc[skip:,int].apply(roundify)
+    else:
+      df.iloc[skip:,ints] = df.iloc[skip:,ints].apply(roundify)
 
-def table_to_html(file,table,ints=None):
+def table_to_html(file,table,ints=None,rounding=False,skip=0):
   import pandas as pd
   import xlrd
 
@@ -39,8 +52,11 @@ def table_to_html(file,table,ints=None):
   
   # call transform function here if ints
   if ints != None:
-    transform(dat,ints)
-  
+    if rounding == True:
+      round_up(dat,ints,skip)
+    else:
+      transform(dat,ints)
+
   # function parameter selects the table to print
   html = filter_html(dat.to_html())
 

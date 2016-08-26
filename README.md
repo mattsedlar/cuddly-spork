@@ -20,14 +20,18 @@ Function parameters:
 
 **table**: *str*, the table (`sheetname` argument in pandas' `read_excel` function) you wish to convert
 
-**ints**: *int,list*, a single integer or list of integers representing columns that read_excel converted from percentages to floats that need to be converted back. Defaults to `None`
+**ints**: *int,list*, a single integer or list of integers representing columns that read_excel converted from percentages to floats that need to be converted back or columns that need to be rounded, see *rounding* and *skip*. During string and *rounding* conversions, floats are always rounded to the tenth place. Defaults to `None`
+
+**rounding**: *boolean*, a True or False value that indicates which columns need to be rounded. Defaults to `False`.
+
+**skip**: *int*, number of rows that needs to be skipped for either string or rounding conversions. Defaults to 0.
 
 Sample:
 
 ```python
 
 import cuddlyspork
-cuddlyspork.table_to_html('sample.xlsx','Table 1',ints=[0,1,2])
+cuddlyspork.table_to_html('sample.xlsx','Table 1',ints=[0,1,2], rounding=True, skip=2)
 
 ```
 
