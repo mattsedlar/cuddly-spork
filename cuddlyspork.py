@@ -31,31 +31,34 @@ def roundify(x):
 def transform(df,ints,skip):
   if type(ints) == list:
     for int in ints:
-      df.iloc[skip:,int] = df.iloc[skip:,int].apply(stringify)
+      df.iloc[skipconvert:,int] = df.iloc[skipconvert:,int].apply(stringify)
       
   else:
-    df.iloc[skip:,ints] = df.iloc[skip:,ints].apply(stringify)
+    df.iloc[skipconvert:,ints] = df.iloc[skipconvert:,ints].apply(stringify)
     
-def round_up(df,ints,skip):
+def round_up(df,ints,skipconvert):
     if type(ints) == list:
       for int in ints:
-        df.iloc[skip:,int] = df.iloc[skip:,int].apply(roundify)
+        df.iloc[skipconvert:,int] = df.iloc[skipconvert:,int].apply(roundify)
     else:
-      df.iloc[skip:,ints] = df.iloc[skip:,ints].apply(roundify)
+      df.iloc[skipconvert:,ints] = df.iloc[skipconvert:,ints].apply(roundify)
 
-def table_to_html(file,table,ints=None,rounding=False,skip=0):
+def table_to_html(file,table,skiprows=0,ints=None,rounding=False,skipconvert=0):
   import pandas as pd
   import xlrd
 
   # read the csv
-  dat = pd.read_excel(file,sheetname=table)
+  dat = pd.read_excel(file,sheetname=table,skiprows=skiprows)
   
   # call transform function here if ints
   if ints != None:
+	
+    skipconvert = skipconvert - skiprows
+
     if rounding == True:
-      round_up(dat,ints,skip)
+      round_up(dat,ints,skipconvert)
     else:
-      transform(dat,ints)
+      transform(dat,ints,skipconvert)
 
   # function parameter selects the table to print
   html = filter_html(dat.to_html())

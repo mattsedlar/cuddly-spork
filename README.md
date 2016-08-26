@@ -20,18 +20,20 @@ Function parameters:
 
 **table**: *str*, the table (`sheetname` argument in pandas' `read_excel` function) you wish to convert
 
+**skiprows**: *int*, the number of rows to be skipped by pandas' `read_excel` function. Defaults to 0.
+
 **ints**: *int,list*, a single integer or list of integers representing columns that read_excel converted from percentages to floats that need to be converted back or columns that need to be rounded, see *rounding* and *skip*. During string and *rounding* conversions, floats are always rounded to the tenth place. Defaults to `None`
 
 **rounding**: *boolean*, a True or False value that indicates which columns need to be rounded. Defaults to `False`.
 
-**skip**: *int*, number of rows that needs to be skipped for either string or rounding conversions. Defaults to 0.
+**skipconvert**: *int*, number of rows that needs to be skipped for either string or rounding conversions. Takes into account number of rows skipped when reading the data via pandas. Example, if your observations start on the fifth row and you need to skip the first three when reading the data in, **skiprows** will be 3 and **skipconvert** will be 5. Defaults to 0.
 
 Sample:
 
 ```python
 
 import cuddlyspork
-cuddlyspork.table_to_html('sample.xlsx','Table 1',ints=[0,1,2], rounding=True, skip=2)
+cuddlyspork.table_to_html('sample.xlsx','Table 1',ints=[0,1,2], rounding=True, skiprows=2, skipconvert=4)
 
 ```
 
